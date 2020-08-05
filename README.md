@@ -4,6 +4,14 @@
 
 Inspired from the official react-admin [demo application](https://marmelab.com/react-admin-demo/#/), this package facilitates quick and easy integration of the menu tree in any new or existing react-admin app.
 
+
+**Supported react-admin versions:**
+
+* React-Admin 3.x
+
+![React-Admin Demo](./assets/ra-demo.png)
+
+
 # Installation
 
 Install using npm:
@@ -34,7 +42,7 @@ Here's a simple example of organising the menu into a tree-like structure:
 ```js
 // In App.js
 import * as React from 'react';
-import { Admin, Resource } from 'react-admin';
+import { Admin, Resource, Layout } from 'react-admin';
 /* Import TreeMenu from the package */
 import TreeMenu from '@bb-tech/ra-treemenu';
 
@@ -54,6 +62,10 @@ const App = () => (
 
 export default App;
 ```
+
+This should give you a menu structure like below:
+
+![Tree image](./assets/tree.png)
 
 You can find an example application implementing this tree menu in the `examples` directory.
 
