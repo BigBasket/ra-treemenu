@@ -10,13 +10,13 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@bb-tech/ra-treemenu": "^1.0.0",
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^3.7.1",
     "react": "^16.13.1",
     "react-admin": "^3.7.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1",
-    "@bb-tech/ra-treemenu": "file:../../"
+    "react-scripts": "^3.4.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
