@@ -34,6 +34,10 @@ To use `ra-treemenu` in your react-admin application:
 <Resource name="posts" options={{ "label": "Posts", "menuParent": "users" }} />
 ```
 
+This should give you a menu structure like below:
+
+![Tree image](./assets/tree.png)
+
 # Examples
 
 
@@ -62,10 +66,6 @@ const App = () => (
 
 export default App;
 ```
-
-This should give you a menu structure like below:
-
-![Tree image](./assets/tree.png)
 
 You can find an example application implementing this tree menu in the `examples` directory.
 
