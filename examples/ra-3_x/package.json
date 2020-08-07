@@ -1,0 +1,33 @@
+{
+  "name": "@bb-tech/ra-treemenu-example",
+  "homepage": ".",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@bb-tech/ra-treemenu": "^1.0.0",
+    "prop-types": "^15.7.2",
+    "ra-data-json-server": "^3.7.1",
+    "react": "^16.13.1",
+    "react-admin": "^3.7.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
