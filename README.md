@@ -113,3 +113,7 @@ To use a custom icon (for a parent or a child), pass it as a prop to the `<Resou
 ```js
 <Resource name="posts" icon={CustomIcon} options={{ "label": "Posts", "menuParent": "users" }} />
 ```
+
+# License
+
+`ra-treemenu` is licensed under [MIT License](./LICENSE.md), sponsored and supported by [BigBasket Tech](https://tech.bigbasket.com).
