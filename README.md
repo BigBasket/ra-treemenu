@@ -9,7 +9,7 @@ Inspired from the official react-admin [demo application](https://marmelab.com/r
 
 * React-Admin 3.x
 
-![React-Admin Demo](./assets/ra-demo.png)
+<img src="./assets/ra-demo.png" alt="React Admin Demo">
 
 
 # Installation
@@ -36,7 +36,7 @@ To use `ra-treemenu` in your react-admin application:
 
 This should give you a menu structure like below:
 
-![Tree image](./assets/tree.png)
+<img src="./assets/tree.png" alt="Tree Image">
 
 # Examples
 
