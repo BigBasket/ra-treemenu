@@ -3,7 +3,7 @@ import LabelIcon from '@material-ui/icons/Label';
 import { MenuItemLink, getResources, translate, DashboardMenuItem } from 'react-admin';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import compose from 'recompose/compose';
+import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import DefaultIcon from '@material-ui/icons/ViewList';
@@ -50,7 +50,7 @@ const Menu = ({
                     isOpen={state[parentResource.name]}
                     sidebarIsOpen={open}
                     name={parentResource.options.label}
-                    icon={parentResource.icon ? <parentResource.icon/> : <LabelIcon />}
+                    icon={parentResource.icon ? <parentResource.icon /> : <LabelIcon />}
                     dense={dense}
                 >
                     {
@@ -93,7 +93,7 @@ const Menu = ({
     );
     return (
         <div>
-            <div className={classnames(classes.main, className)} {...rest}>
+            <div style={{marginTop: '10px'}} className={classnames(classes.main, className)} {...rest}>
                 {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
                 {resRenderGroup}
             </div>
