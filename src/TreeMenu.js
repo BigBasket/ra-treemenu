@@ -78,6 +78,7 @@ const Menu = ({
      */
     resRenderGroup.push(
         resources.filter(r => r.options && !r.options.hasOwnProperty('menuParent') && !r.options.hasOwnProperty('isMenuParent'))
+            .filter(r => r.hasList)
             .map(independentResource => (
                 <MenuItemLink
                     key={independentResource.name}
