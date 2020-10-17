@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
-// import Divider from '@material-ui/core/Divider';
 
 
 const useStyles = makeStyles(theme => ({
@@ -61,7 +60,6 @@ const CustomMenuItem = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, child
                 >
                     {children}
                 </List>
-                {/* <Divider/> */}
             </Collapse>
         </Fragment>
     );
