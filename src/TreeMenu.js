@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import LabelIcon from '@material-ui/icons/Label';
 import { useMediaQuery, Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { MenuItemLink, getResources, translate, DashboardMenuItem } from 'react-admin';
+import { 
+    MenuItemLink,
+    getResources,
+    useTranslate, 
+    translate, 
+    DashboardMenuItem
+} from 'react-admin';
 import PropTypes from 'prop-types';
-import { connect, useSelector } from 'react-redux';
-import { compose } from 'recompose';
+import { useSelector, shallowEqual } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import DefaultIcon from '@material-ui/icons/ViewList';
@@ -35,20 +40,20 @@ const Menu = (props) => {
         dense,
         hasDashboard,
         onMenuClick,
-        open,
-        pathname,
-        resources,
-        translate,
         logout,
         ...rest
     } = props;
     const classes = useStyles(props);
+    const translate = useTranslate();
+    const open = useSelector((state) => state.admin.ui.sidebarOpen);
+    const pathname = useSelector((state) => state.router.location.pathname);
+    const resources = useSelector(getResources, shallowEqual);
 
     const handleToggle = (parent) => {
         setState(state => ({ [parent]: !state[parent] }));
     };
 
-    const isXSmall = useMediaQuery((theme: Theme) =>
+    const isXSmall = useMediaQuery((theme) =>
         theme.breakpoints.down('xs')
     );
 
@@ -155,9 +160,6 @@ const Menu = (props) => {
         }
     });
 
-    // Used to force redraw on navigation
-    useSelector(() => state.router.location.pathname);
-
     return (
         <div>
             <div
@@ -185,40 +187,11 @@ Menu.propTypes = {
     hasDashboard: PropTypes.bool,
     logout: PropTypes.element,
     onMenuClick: PropTypes.func,
-    open: PropTypes.bool,
-    pathname: PropTypes.string,
-    resources: PropTypes.array.isRequired,
-    translate: PropTypes.func.isRequired
 };
 
 Menu.defaultProps = {
     onMenuClick: () => null
 };
 
-const mapStateToProps = state => ({
-    open: state.admin.ui.sidebarOpen,
-    resources: getResources(state),
-    pathname: state.router.location.pathname
-});
 
-const enhance = compose(
-    translate,
-    connect(
-        mapStateToProps,
-        {}, // Avoid connect passing dispatch in props,
-        null,
-        {
-            areStatePropsEqual: (prev, next) =>
-                prev.resources.every(
-                    (value, index) => value === next.resources[index] // shallow compare resources
-                ) &&
-                // eslint-disable-next-line
-                prev.pathname == next.pathname &&
-                // eslint-disable-next-line
-                prev.open == next.open
-        }
-    ),
-    withStyles(null)
-);
-
-export default enhance(Menu);
+export default Menu;
