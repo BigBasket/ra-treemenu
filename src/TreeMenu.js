@@ -4,7 +4,7 @@ import { useMediaQuery, Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { MenuItemLink, getResources, translate, DashboardMenuItem } from 'react-admin';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { compose } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -199,6 +199,10 @@ const Menu = (props) => {
             resRenderGroup.push(mapIndependent(r))
         }
     });
+
+    // Used to force redraw on navigation
+    useSelector(() => state.router.location.pathname);
+
     return (
         <div>
             <div style={{marginTop: '10px'}} className={classnames(classes.main, className)} {...rest}>
