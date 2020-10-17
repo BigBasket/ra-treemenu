@@ -8,30 +8,51 @@ import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
+import classnames from 'classnames';
 
-
-const useStyles = makeStyles(theme => ({
-    icon: { minWidth: theme.spacing(5) },
-    sidebarIsOpen: {
-        paddingLeft: 25,
-        transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
-    },
-    sidebarIsClosed: {
-        paddingLeft: 0,
-        transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
-    },
-}));
-
+const useStyles = makeStyles(
+    theme => ({
+        icon: { minWidth: theme.spacing(5) },
+        sidebarIsOpen: {
+            paddingLeft: 25,
+            transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+        },
+        sidebarIsClosed: {
+            paddingLeft: 0,
+            transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+        },
+        menuItem: {},
+        menuItemName: {
+            color: theme.palette.text.secondary
+        },
+        openMenuItem: {}
+    }),
+    { name: 'RaTreeCustomMenuItem' }
+);
 
 const CustomMenuItem = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, children, dense, }) => {
     const classes = useStyles();
 
     const header = (
-        <MenuItem dense={dense} button onClick={handleToggle}>
+        <MenuItem 
+            dense={dense} 
+            button 
+            onClick={handleToggle}
+            className={classnames(
+                classes.menuItem,
+                {[classes.openMenuItem]: isOpen}
+            )}
+        >
             <ListItemIcon className={classes.icon}>
                 {isOpen ? <ExpandMore /> : icon}
             </ListItemIcon>
-            <Typography variant="inherit" color="textSecondary">
+            <Typography
+                variant="inherit" 
+                className={classnames(
+                    classes.menuItemName,
+                    'menuItemName'
+                )}
+            >
                 {name}
             </Typography>
         </MenuItem>
