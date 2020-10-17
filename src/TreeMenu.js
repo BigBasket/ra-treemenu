@@ -48,6 +48,10 @@ const Menu = (props) => {
         setState(state => ({ [parent]: !state[parent] }));
     };
 
+    const isXSmall = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.down('xs')
+    );
+
     const isParent = (resource) => {
         return (
             resource.options && 
@@ -159,6 +163,7 @@ const Menu = (props) => {
             <div style={{marginTop: '10px'}} className={classnames(classes.main, className)} {...rest}>
                 {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
                 {resRenderGroup}
+                {isXSmall && logout}
             </div>
         </div>
     );
