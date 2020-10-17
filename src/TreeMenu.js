@@ -160,8 +160,17 @@ const Menu = (props) => {
 
     return (
         <div>
-            <div style={{marginTop: '10px'}} className={classnames(classes.main, className)} {...rest}>
-                {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
+            <div
+                className={classnames(classes.main, className)} 
+                {...rest}
+            >
+                {hasDashboard && (
+                    <DashboardMenuItem
+                        onClick={onMenuClick}
+                        dense={dense}
+                        sidebarIsOpen={open}
+                    />
+                )}
                 {resRenderGroup}
                 {isXSmall && logout}
             </div>
