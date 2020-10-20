@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { translate } from 'react-admin';
+import { useTranslate } from 'react-admin';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import List from '@material-ui/core/List';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -32,6 +32,7 @@ const useStyles = makeStyles(
 
 const CustomMenuItem = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, children, dense, }) => {
     const classes = useStyles();
+    const translate = useTranslate();
 
     const header = (
         <MenuItem 

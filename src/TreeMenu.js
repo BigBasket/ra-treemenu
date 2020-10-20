@@ -6,7 +6,6 @@ import {
     MenuItemLink,
     getResources,
     useTranslate, 
-    translate, 
     DashboardMenuItem
 } from 'react-admin';
 import PropTypes from 'prop-types';
@@ -132,7 +131,7 @@ const Menu = (props) => {
                         <MenuItemLink
                             key={childResource.name}
                             to={`/${childResource.name}`}
-                            primaryText={childResource.options.label}
+                            primaryText={translate(childResource.options.label)}
                             leftIcon={
                                 childResource.icon 
                                     ? <childResource.icon/> 
