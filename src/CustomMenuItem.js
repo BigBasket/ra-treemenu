@@ -53,7 +53,7 @@ const CustomMenuItem = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, child
                     'menuItemName'
                 )}
             >
-                {name}
+                {translate(name)}
             </Typography>
         </MenuItem>
     );
