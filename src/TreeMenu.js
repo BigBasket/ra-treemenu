@@ -161,6 +161,7 @@ const Menu = (props) => {
      */
     const mapParentStack = (parentResource) =>
         <CustomMenuItem
+            key={parentResource.name}
             handleToggle={() => handleToggle(parentResource.name)}
             isOpen={state[parentResource.name] || parentActiveResName === parentResource.name}
             sidebarIsOpen={open}
@@ -176,7 +177,8 @@ const Menu = (props) => {
                         resource.options.hasOwnProperty('menuParent') && 
                         resource.options.menuParent == parentResource.name
                     ))
-                    .map((childResource) => (
+                    .map((childResource) => {
+                        return (
                         <MenuItemLink
                             key={childResource.name}
                             to={`/${childResource.name}`}
@@ -190,7 +192,7 @@ const Menu = (props) => {
                             dense={dense}
                             sidebarIsOpen={open}
                         />
-                    ))
+                    )})
             }
         </CustomMenuItem>;
 
