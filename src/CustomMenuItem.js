@@ -36,6 +36,7 @@ const CustomMenuItem = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, child
 
     const header = (
         <MenuItem 
+            key={name}
             dense={dense} 
             button 
             onClick={handleToggle}
