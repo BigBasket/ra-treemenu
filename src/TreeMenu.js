@@ -27,9 +27,58 @@ const Menu = ({
         setState(state => ({ [parent]: !state[parent] }));
     };
 
-    const isParent = (resource) => {
+    const isParent = resource => {
         return resource.options && resource.options.hasOwnProperty('isMenuParent') && resource.options.isMenuParent;
     }
+
+    const isOrpahn= resource =>{
+        return resource.options && !resource.options.hasOwnProperty('menuParent') && !resource.options.hasOwnProperty('isMenuParent')
+    }
+
+    /**
+     * Mapping a "parent" entry and then all its children to the "tree" layout
+     */
+    const mapParentStack = parentResource =>
+        <CustomMenuItem
+            handleToggle={() => handleToggle(parentResource.name)}
+            isOpen={state[parentResource.name]}
+            sidebarIsOpen={open}
+            name={parentResource.options.label}
+            icon={parentResource.icon ? <parentResource.icon/> : <LabelIcon/>}
+            dense={dense}
+        >
+            {
+                // eslint-disable-next-line
+                resources.filter(r => r.options && r.options.hasOwnProperty('menuParent') && r.options.menuParent == parentResource.name)
+                    .map(childResource => (
+                        <MenuItemLink
+                            key={childResource.name}
+                            to={`/${childResource.name}`}
+                            primaryText={childResource.options.label}
+                            leftIcon={
+                                childResource.icon ? <childResource.icon/> : <DefaultIcon/>
+                            }
+                            onClick={onMenuClick}
+                            dense={dense}
+                        />
+                    ))
+            }
+        </CustomMenuItem>;
+
+    /**
+     * Mapping independent (without a parent) entries
+     */
+    const mapIndependent=independentResource=>
+        <MenuItemLink
+            key={independentResource.name}
+            to={`/${independentResource.name}`}
+            primaryText={independentResource.options.label}
+            leftIcon={
+                independentResource.icon ? <independentResource.icon/> : <DefaultIcon/>
+            }
+            onClick={onMenuClick}
+            dense={dense}
+        />;
 
     const initialExpansionState = {};
     resources.forEach(res => {
@@ -39,58 +88,19 @@ const Menu = ({
     });
     const [state, setState] = useState(initialExpansionState);
     const resRenderGroup = [];
+
     /**
-     * Pushing the menu tree for rendering
+     * Pushing the menu tree for rendering in the order we find them declared
      */
-    resRenderGroup.push(
-        resources.filter(r => isParent(r))
-            .map(parentResource => (
-                <CustomMenuItem
-                    handleToggle={() => handleToggle(parentResource.name)}
-                    isOpen={state[parentResource.name]}
-                    sidebarIsOpen={open}
-                    name={parentResource.options.label}
-                    icon={parentResource.icon ? <parentResource.icon /> : <LabelIcon />}
-                    dense={dense}
-                >
-                    {
-                        // eslint-disable-next-line
-                        resources.filter(r => r.options && r.options.hasOwnProperty('menuParent') && r.options.menuParent == parentResource.name)
-                            .map(childResource => (
-                                <MenuItemLink
-                                    key={childResource.name}
-                                    to={`/${childResource.name}`}
-                                    primaryText={childResource.options.label}
-                                    leftIcon={
-                                        childResource.icon ? <childResource.icon /> : <DefaultIcon />
-                                    }
-                                    onClick={onMenuClick}
-                                    dense={dense}
-                                />
-                            ))
-                    }
-                </CustomMenuItem>
-            ))
-    );
-    /**
-     * Pushing the orphan resources for rendering
-     * below other menu items
-     */
-    resRenderGroup.push(
-        resources.filter(r => r.options && !r.options.hasOwnProperty('menuParent') && !r.options.hasOwnProperty('isMenuParent'))
-            .map(independentResource => (
-                <MenuItemLink
-                    key={independentResource.name}
-                    to={`/${independentResource.name}`}
-                    primaryText={independentResource.options.label}
-                    leftIcon={
-                        independentResource.icon ? <independentResource.icon /> : <DefaultIcon />
-                    }
-                    onClick={onMenuClick}
-                    dense={dense}
-                />
-            ))
-    );
+    resources.forEach(r => {
+        if(isParent(r)){
+            resRenderGroup.push(mapParentStack(r))
+        }
+        if(isOrpahn(r)) {
+            resRenderGroup.push(mapIndependent(r))
+        }
+    });
+
     return (
         <div>
             <div style={{marginTop: '10px'}} className={classnames(classes.main, className)} {...rest}>
