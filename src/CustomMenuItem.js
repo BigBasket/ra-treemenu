@@ -35,21 +35,21 @@ const CustomMenuItem = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, child
     const translate = useTranslate();
 
     const header = (
-        <MenuItem 
+        <MenuItem
             key={name}
-            dense={dense} 
-            button 
+            dense={dense}
+            button
             onClick={handleToggle}
             className={classnames(
                 classes.menuItem,
-                {[classes.openMenuItem]: isOpen}
+                { [classes.openMenuItem]: isOpen }
             )}
         >
             <ListItemIcon className={classes.icon}>
                 {isOpen ? <ExpandMore /> : icon}
             </ListItemIcon>
             <Typography
-                variant="inherit" 
+                variant="inherit"
                 className={classnames(
                     classes.menuItemName,
                     'menuItemName'
