@@ -41,119 +41,88 @@ const Menu = (props) => {
         logout,
         ...rest
     } = props;
+
     const classes = useStyles(props);
     const translate = useTranslate();
     const open = useSelector((state) => state.admin.ui.sidebarOpen);
     const pathname = useSelector((state) => state.router.location.pathname);
     const resources = useSelector(getResources, shallowEqual);
+    const hasList = (resource) => (resource.hasList);
 
     const handleToggle = (parent) => {
+        /**
+         * Handles toggling of parents dropdowns
+         * for resource visibility
+         */
         setState(state => ({ [parent]: !state[parent] }));
     };
 
     const isXSmall = useMediaQuery((theme) =>
+        /**
+         * This function is not directly used anywhere
+         * but is required to fix the following error:
+         * 
+         * Error: Rendered fewer hooks than expected.
+         * This may be caused by an accidental early
+         * return statement.
+         * 
+         * thrown by RA at the time of rendering.
+         */
         theme.breakpoints.down('xs')
     );
 
-    const isParent = (resource) => {
-        return (
-            resource.options &&
-            resource.options.hasOwnProperty('isMenuParent') &&
-            resource.options.isMenuParent
-        );
-    };
+    const isParent = (resource) => (
+        /**
+         * Check if the given resource is a parent
+         * i.e. dummy resource for menu parenting
+         */
+        resource.options &&
+        resource.options.hasOwnProperty('isMenuParent') &&
+        resource.options.isMenuParent
+    );
 
-    const isOrphan = (resource) => {
-        return (
-            resource.options &&
-            !resource.options.hasOwnProperty('menuParent') &&
-            !resource.options.hasOwnProperty('isMenuParent')
-        )
-    };
+    const isOrphan = (resource) => (
+        /**
+         * Check if the given resource is an orphan
+         * i.e. has no parents defined. Needed as
+         * these resources are supposed to be rendered
+         * as is
+         *  
+         */
+        resource.options &&
+        !resource.options.hasOwnProperty('menuParent') &&
+        !resource.options.hasOwnProperty('isMenuParent')
+    );
 
-    /**
-     * Mapping independent (without a parent) entries
-     */
-    const mapIndependent = (independentResource) =>
+    const isChildOfParent = (resource, parentResource) => (
+        /**
+         * Returns true if the given resource is the
+         * mapped child of the parentResource
+         */
+        resource.options &&
+        resource.options.hasOwnProperty('menuParent') &&
+        resource.options.menuParent == parentResource.name
+    );
+
+    const MenuItem = (resource) => (
+        /**
+         * Created and returns the MenuItemLink object component
+         * for a given resource.
+         */
         <MenuItemLink
-            key={independentResource.name}
-            to={`/${independentResource.name}`}
-            primaryText={independentResource.options.label}
+            key={resource.name}
+            to={`/${resource.name}`}
+            primaryText={translate(resource.options.label)}
             leftIcon={
-                independentResource.icon
-                    ? <independentResource.icon />
+                resource.icon
+                    ? <resource.icon />
                     : <DefaultIcon />
             }
             onClick={onMenuClick}
             dense={dense}
             sidebarIsOpen={open}
-        />;
-
-    const isOrpahn = resource => {
-        return resource.options && !resource.options.hasOwnProperty('menuParent') && !resource.options.hasOwnProperty('isMenuParent')
-    }
-
-    /**
-     * Mapping a "parent" entry and then all its children to the "tree" layout
-     */
-    const mapParentStack = parentResource =>
-        <CustomMenuItem
-            handleToggle={() => handleToggle(parentResource.name)}
-            isOpen={state[parentResource.name]}
-            sidebarIsOpen={open}
-            name={parentResource.options.label}
-            icon={parentResource.icon ? <parentResource.icon /> : <LabelIcon />}
-            dense={dense}
-        >
-            {
-                // eslint-disable-next-line
-                resources.filter(r => r.options && r.options.hasOwnProperty('menuParent') && r.options.menuParent == parentResource.name)
-                    .map(childResource => (
-                        <MenuItemLink
-                            key={childResource.name}
-                            to={`/${childResource.name}`}
-                            primaryText={childResource.options.label}
-                            leftIcon={
-                                childResource.icon ? <childResource.icon /> : <DefaultIcon />
-                            }
-                            onClick={onMenuClick}
-                            dense={dense}
-                        />
-                    ))
-            }
-        </CustomMenuItem>;
-
-    /**
-     * Mapping independent (without a parent) entries
-     */
-    const mapIndependent = independentResource =>
-        <MenuItemLink
-            key={independentResource.name}
-            to={`/${independentResource.name}`}
-            primaryText={independentResource.options.label}
-            leftIcon={
-                independentResource.icon ? <independentResource.icon /> : <DefaultIcon />
-            }
-            onClick={onMenuClick}
-            dense={dense}
-        />;
-
-    const initialExpansionState = {};
-    let parentActiveResName = null;
-
-    // initialize all parents to unexpanded first, and also find active resource
-    resources.forEach(res => {
-        if (isParent(res)) {
-            initialExpansionState[res.name] = false;
-        } else if (
-            pathname.startsWith(`/${res.name}`) &&
-            res.options.hasOwnProperty('menuParent')
-        ) {
-            parentActiveResName = res.options.menuParent;
-        }
-    });
-
-    const [state, setState] = useState(initialExpansionState);
+        />
+    );
 
     /**
      * Mapping a "parent" entry and then all its children to the "tree" layout
@@ -171,43 +140,52 @@ const Menu = (props) => {
             {
                 // eslint-disable-next-line
                 resources
-                    .filter((resource) => (
-                        resource.options &&
-                        resource.options.hasOwnProperty('menuParent') &&
-                        resource.options.menuParent == parentResource.name
-                    ))
-                    .map((childResource) => {
-                        return (
-                            <MenuItemLink
-                                key={childResource.name}
-                                to={`/${childResource.name}`}
-                                primaryText={translate(childResource.options.label)}
-                                leftIcon={
-                                    childResource.icon
-                                        ? <childResource.icon />
-                                        : <DefaultIcon />
-                                }
-                                onClick={onMenuClick}
-                                dense={dense}
-                                sidebarIsOpen={open}
-                            />
-                        )
-                    })
+                    .filter((resource) => isChildOfParent(resource, parentResource) && hasList(resource))
+                    .map((childResource) => { return MenuItem(childResource); })
             }
         </CustomMenuItem>;
 
+    /**
+     * Mapping independent (without a parent) entries
+     */
+    const mapIndependent = (independentResource) => MenuItem(independentResource);
+
+
+    /**
+     * Initialising the initialExpansionState and
+     * active parent resource name at the time of
+     * initial menu rendering.
+     */
+    const initialExpansionState = {};
+    let parentActiveResName = null;
+
+    /**
+     * Initialise all parents to inactive first.
+     * Also find the active resource name.
+     */
+    resources.forEach(resource => {
+        if (isParent(resource)) {
+            initialExpansionState[resource.name] = false;
+        } else if (pathname.startsWith(`/${resource.name}`) && resource.options.hasOwnProperty('menuParent')) {
+            parentActiveResName = resource.options.menuParent;
+        }
+    });
+
+    const [state, setState] = useState(initialExpansionState);
+
+    /**
+     * The final array which will hold the array
+     * of resources to be rendered
+     */
     const resRenderGroup = [];
 
     /**
-     * Pushing the menu tree for rendering in the order we find them declared
+     * Looping over all resources and pushing the menu tree
+     * for rendering in the order we find them declared in
      */
     resources.forEach(r => {
-        if (isParent(r)) {
-            resRenderGroup.push(mapParentStack(r))
-        }
-        if (isOrphan(r)) {
-            resRenderGroup.push(mapIndependent(r))
-        }
+        if (isParent(r)) resRenderGroup.push(mapParentStack(r));
+        if (isOrphan(r)) resRenderGroup.push(mapIndependent(r));
     });
 
     return (
