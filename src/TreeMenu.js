@@ -149,7 +149,7 @@ const Menu = (props) => {
     /**
      * Mapping independent (without a parent) entries
      */
-    const mapIndependent = (independentResource) => MenuItem(independentResource);
+    const mapIndependent = (independentResource) => hasList(independentResource) && MenuItem(independentResource);
 
 
     /**
