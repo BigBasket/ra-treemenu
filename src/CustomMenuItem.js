@@ -30,7 +30,15 @@ const useStyles = makeStyles(
     { name: 'RaTreeCustomMenuItem' }
 );
 
-const CustomMenuItem = ({ handleToggle, sidebarIsOpen, isOpen, name, icon, children, dense, }) => {
+const CustomMenuItem = ({
+    handleToggle,
+    sidebarIsOpen,
+    isOpen,
+    name,
+    icon,
+    children,
+    dense
+}) => {
     const classes = useStyles();
     const translate = useTranslate();
 

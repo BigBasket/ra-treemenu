@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LabelIcon from '@material-ui/icons/Label';
-import { useMediaQuery, Theme } from '@material-ui/core';
+import { useMediaQuery } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     MenuItemLink,
@@ -127,7 +127,7 @@ const Menu = (props) => {
     /**
      * Mapping a "parent" entry and then all its children to the "tree" layout
      */
-    const mapParentStack = (parentResource) =>
+    const mapParentStack = (parentResource) => (
         <CustomMenuItem
             key={parentResource.name}
             handleToggle={() => handleToggle(parentResource.name)}
@@ -143,7 +143,8 @@ const Menu = (props) => {
                     .filter((resource) => isChildOfParent(resource, parentResource) && hasList(resource))
                     .map((childResource) => { return MenuItem(childResource); })
             }
-        </CustomMenuItem>;
+        </CustomMenuItem>
+    );
 
     /**
      * Mapping independent (without a parent) entries
