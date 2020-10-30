@@ -1,6 +1,6 @@
 {
   "name": "@bb-tech/ra-treemenu",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tree-like menu implementation for react-admin applications.",
   "author": "BigBasket Tech",
   "repository": "BigBasket/ra-treemenu",
@@ -30,9 +30,6 @@
     "prepare": "npm run build",
     "predeploy": "cd examples/ra-3_x && npm install && npm run build",
     "deploy": "gh-pages -d examples/ra-3_x/build"
-  },
-  "dependencies": {
-    "recompose": "^0.30.0"
   },
   "peerDependencies": {
     "react": "^16.13.1",
