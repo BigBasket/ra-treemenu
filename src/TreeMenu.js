@@ -104,6 +104,18 @@ const Menu = (props) => {
         resource.options.menuParent == parentResource.name
     );
 
+    const getPrimaryTextForResource = (resource) => {
+        if (resource.options.label)
+            return translate(resource.options.label);
+        else {
+            /**
+             * Capitalize in case of default label
+             */
+            let primaryText = translate(resource.name);
+            return primaryText.charAt(0).toUpperCase() + primaryText.slice(1);
+        }
+    }
+
     const MenuItem = (resource) => (
         /**
          * Created and returns the MenuItemLink object component
@@ -112,7 +124,7 @@ const Menu = (props) => {
         <MenuItemLink
             key={resource.name}
             to={`/${resource.name}`}
-            primaryText={translate(resource.options.label)}
+            primaryText={getPrimaryTextForResource(resource)}
             leftIcon={
                 resource.icon
                     ? <resource.icon />
@@ -133,7 +145,7 @@ const Menu = (props) => {
             handleToggle={() => handleToggle(parentResource.name)}
             isOpen={state[parentResource.name] || parentActiveResName === parentResource.name}
             sidebarIsOpen={open}
-            name={parentResource.options.label}
+            name={getPrimaryTextForResource(parentResource)}
             icon={parentResource.icon ? <parentResource.icon /> : <LabelIcon />}
             dense={dense}
         >
