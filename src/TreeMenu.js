@@ -103,17 +103,26 @@ const Menu = (props) => {
         resource.options.hasOwnProperty('menuParent') &&
         resource.options.menuParent == parentResource.name
     );
+    const geResourceName = (slug) => {
+        if (!slug) return;
+        var words = slug.toString().split('_');
+        for (var i = 0; i < words.length; i++) {
+            var word = words[i];
+            words[i] = word.charAt(0).toUpperCase() + word.slice(1);
+        }
+        return words.join(' ');
+    }
 
     const getPrimaryTextForResource = (resource) => {
-        if (resource.options.label)
-            return translate(resource.options.label);
-        else {
-            /**
-             * Capitalize in case of default label
-             */
-            let primaryText = translate(resource.name);
-            return primaryText.charAt(0).toUpperCase() + primaryText.slice(1);
+        let resourcename = '';
+        if (resource.options && resource.options.label)
+            resourcename = resource.options.label;
+        else if (resource.name) {
+            resourcename = translate(`resources.${resource.name}.name`);
+            if (resourcename.startsWith('resources.'))
+                resourcename =  geResourceName(resource.name);
         }
+        return resourcename;
     }
 
     const MenuItem = (resource) => (
