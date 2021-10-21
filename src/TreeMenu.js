@@ -27,6 +27,16 @@ const useStyles = makeStyles(
             [theme.breakpoints.up('md')]: {
                 marginTop: '1.5em',
             },
+            transition: theme.transitions.create("width", {
+                easing: theme.transitions.easing.sharp,
+                duration: theme.transitions.duration.leavingScreen,
+            }),
+        },
+        open: {
+            width: 200,
+        },
+        closed: {
+            width: 55,
         },
     }),
     { name: 'RaTreeMenu' }
@@ -120,7 +130,7 @@ const Menu = (props) => {
         else if (resource.name) {
             resourcename = translate(`resources.${resource.name}.name`);
             if (resourcename.startsWith('resources.'))
-                resourcename =  geResourceName(resource.name);
+                resourcename = geResourceName(resource.name);
         }
         return resourcename;
     }
@@ -213,7 +223,10 @@ const Menu = (props) => {
     return (
         <div>
             <div
-                className={classnames(classes.main, className)}
+                className={classnames(classes.main, className, {
+                    [classes.open]: open,
+                    [classes.closed]: !open,
+                })}
                 {...rest}
             >
                 {hasDashboard && (
