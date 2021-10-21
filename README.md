@@ -75,6 +75,7 @@ You can find an example application implementing this tree menu in the `examples
 ### Using a Custom Layout
 
 It is completely possible to use `ra-treemenu` inside your custom app layout.
+Default label for dashboard menu is `Dashboard`.  You can customize it.
 
 ```js
 // In App.js
@@ -95,9 +96,10 @@ export default App;
 /* Import TreeMenu from the package */
 import TreeMenu from '@bb-tech/ra-treemenu';
  
-const CustomLayout = (props) => (
-    <Layout {...props} menu={TreeMenu} />
-);
+const CustomLayout = (props) => {
+    TreeMenu.defaultProps.dashboardlabel = 'My Dashboard';
+    return <Layout {...props} menu={TreeMenu} />
+};
 
 export default CustomLayout;
 ```

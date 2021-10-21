@@ -14,16 +14,20 @@ const useStyles = makeStyles(
     theme => ({
         icon: { minWidth: theme.spacing(5) },
         sidebarIsOpen: {
-            paddingLeft: 25,
+        '& a': {
+            paddingLeft: theme.spacing(3),
             transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+            },
         },
-        sidebarIsClosed: {
-            paddingLeft: 0,
+    sidebarIsClosed: {
+        '& a': {
+            paddingLeft: theme.spacing(2),
             transition: 'padding-left 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms',
+            },
         },
         menuItem: {},
         menuItemName: {
-            color: theme.palette.text.secondary
+            color: theme.palette.secondary
         },
         openMenuItem: {}
     }),

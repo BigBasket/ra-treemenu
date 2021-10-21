@@ -49,6 +49,7 @@ const Menu = (props) => {
         hasDashboard,
         onMenuClick,
         logout,
+        dashboardlabel,
         ...rest
     } = props;
 
@@ -234,6 +235,7 @@ const Menu = (props) => {
                         onClick={onMenuClick}
                         dense={dense}
                         sidebarIsOpen={open}
+                        primaryText={dashboardlabel}
                     />
                 )}
                 {resRenderGroup}
@@ -249,10 +251,12 @@ Menu.propTypes = {
     hasDashboard: PropTypes.bool,
     logout: PropTypes.element,
     onMenuClick: PropTypes.func,
+    dashboardlabel:PropTypes.string,
 };
 
 Menu.defaultProps = {
-    onMenuClick: () => null
+    onMenuClick: () => null,
+    dashboardlabel: 'Dashboard'
 };
 
 
