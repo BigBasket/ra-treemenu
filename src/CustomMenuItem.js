@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslate } from 'react-admin';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import List from '@material-ui/core/List';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -58,7 +59,7 @@ const CustomMenuItem = ({
             )}
         >
             <ListItemIcon className={classes.icon}>
-                {isOpen ? <ExpandMore /> : icon}
+                {icon}
             </ListItemIcon>
             <Typography
                 variant="inherit"
@@ -69,6 +70,9 @@ const CustomMenuItem = ({
             >
                 {translate(name)}
             </Typography>
+            <ListItemIcon className={classes.icon}>
+                {isOpen ? <ExpandMore /> : <ExpandLessIcon />}
+            </ListItemIcon>
         </MenuItem>
     );
 
