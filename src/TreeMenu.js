@@ -50,6 +50,7 @@ const Menu = (props) => {
         onMenuClick,
         logout,
         dashboardlabel,
+        resources,
         ...rest
     } = props;
 
@@ -57,7 +58,7 @@ const Menu = (props) => {
     const translate = useTranslate();
     const open = useSelector((state) => state.admin.ui.sidebarOpen);
     const pathname = useSelector((state) => state.router.location.pathname);
-    const resources = useSelector(getResources, shallowEqual);
+    const resources = resources || useSelector(getResources, shallowEqual);
     const hasList = (resource) => (resource.hasList);
 
     const handleToggle = (parent) => {
@@ -252,6 +253,7 @@ Menu.propTypes = {
     logout: PropTypes.element,
     onMenuClick: PropTypes.func,
     dashboardlabel:PropTypes.string,
+    resources:PropTypes.array,
 };
 
 Menu.defaultProps = {
