@@ -257,13 +257,15 @@ Menu.propTypes = {
     hasDashboard: PropTypes.bool,
     logout: PropTypes.element,
     onMenuClick: PropTypes.func,
-    dashboardlabel:PropTypes.string,
-    resources:PropTypes.array,
+    dashboardlabel: PropTypes.string,
+    resources: PropTypes.array,
+    customMenuItems: PropTypes.array,
 };
 
 Menu.defaultProps = {
     onMenuClick: () => null,
-    dashboardlabel: 'Dashboard'
+    dashboardlabel: 'Dashboard',
+    customMenuItems: []
 };
 
 
