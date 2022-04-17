@@ -50,7 +50,7 @@ const Menu = (props) => {
         onMenuClick,
         logout,
         dashboardlabel,
-        resources,
+        resources: origResources,
         customMenuItems,  // List of MenuItemLink components
         ...rest
     } = props;
@@ -59,7 +59,7 @@ const Menu = (props) => {
     const translate = useTranslate();
     const open = useSelector((state) => state.admin.ui.sidebarOpen);
     const pathname = useSelector((state) => state.router.location.pathname);
-    const resources = resources || useSelector(getResources, shallowEqual);
+    const resources = origResources || useSelector(getResources, shallowEqual);
     const hasList = (resource) => (resource.hasList);
 
     const handleToggle = (parent) => {
