@@ -1,4 +1,5 @@
 # ra-treemenu
+# For React-Admin 4.x support, please use [@bb-tech/ra-components](https://www.npmjs.com/package/@bb-tech/ra-components)
 
 *A tree-like menu implementation for react-admin.*
 
@@ -8,6 +9,7 @@ Inspired from the official react-admin [demo application](https://marmelab.com/r
 **Supported react-admin versions:**
 
 * React-Admin 3.x
+* For React-Admin 4.x support, please use [@bb-tech/ra-components](https://www.npmjs.com/package/@bb-tech/ra-components)
 
 <img src="./assets/ra-demo.png" alt="React Admin Demo">
 
