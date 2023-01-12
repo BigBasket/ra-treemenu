@@ -50,7 +50,8 @@ const Menu = (props) => {
         onMenuClick,
         logout,
         dashboardlabel,
-        resources,
+        resources: origResources,
+        customMenuItems,  // List of MenuItemLink components
         ...rest
     } = props;
 
@@ -58,7 +59,7 @@ const Menu = (props) => {
     const translate = useTranslate();
     const open = useSelector((state) => state.admin.ui.sidebarOpen);
     const pathname = useSelector((state) => state.router.location.pathname);
-    const resources = resources || useSelector(getResources, shallowEqual);
+    const resources = origResources || useSelector(getResources, shallowEqual);
     const hasList = (resource) => (resource.hasList);
 
     const handleToggle = (parent) => {
@@ -73,11 +74,11 @@ const Menu = (props) => {
         /**
          * This function is not directly used anywhere
          * but is required to fix the following error:
-         * 
+         *
          * Error: Rendered fewer hooks than expected.
          * This may be caused by an accidental early
          * return statement.
-         * 
+         *
          * thrown by RA at the time of rendering.
          */
         theme.breakpoints.down('xs')
@@ -99,7 +100,7 @@ const Menu = (props) => {
          * i.e. has no parents defined. Needed as
          * these resources are supposed to be rendered
          * as is
-         *  
+         *
          */
         resource.options &&
         !resource.options.hasOwnProperty('menuParent') &&
@@ -113,7 +114,7 @@ const Menu = (props) => {
          */
         resource.options &&
         resource.options.hasOwnProperty('menuParent') &&
-        resource.options.menuParent == parentResource.name
+        resource.options.menuParent === parentResource.name
     );
     const geResourceName = (slug) => {
         if (!slug) return;
@@ -222,6 +223,10 @@ const Menu = (props) => {
         if (isOrphan(r)) resRenderGroup.push(mapIndependent(r));
     });
 
+    if (customMenuItems) {
+        customMenuItems.forEach(menuItem => resRenderGroup.push(menuItem));
+    }
+
     return (
         <div>
             <div
@@ -252,13 +257,15 @@ Menu.propTypes = {
     hasDashboard: PropTypes.bool,
     logout: PropTypes.element,
     onMenuClick: PropTypes.func,
-    dashboardlabel:PropTypes.string,
-    resources:PropTypes.array,
+    dashboardlabel: PropTypes.string,
+    resources: PropTypes.array,
+    customMenuItems: PropTypes.array,
 };
 
 Menu.defaultProps = {
     onMenuClick: () => null,
-    dashboardlabel: 'Dashboard'
+    dashboardlabel: 'Dashboard',
+    customMenuItems: []
 };
 
 
